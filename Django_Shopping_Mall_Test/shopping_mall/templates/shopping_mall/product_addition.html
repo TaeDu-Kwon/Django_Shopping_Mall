@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/product_addition.css' %}" />
+    <title>Document</title>
+</head>
+<body>
+    <h1>Product Addition</h1>
+    <div class = "product-container">
+        <div class = "product-card">
+            <h2>Product Addition</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="product-group">
+                    <label for="product_name">상품 이름</label>
+                    {{ form.product_name }}
+                    {{ form.product_name.errors }}
+                </div>
+                <div class="product-group">
+                    <label for="model_name">모델 명</label>
+                    {{ form.model_name }}
+                    {{ form.model_name.errors }}
+                </div>
+                <div class="product-group">
+                    <label for="product_price">상품 가격</label>
+                    {{ form.product_price }}
+                    {{ form.product_price.errors }}
+                </div>
+                <div class="product-group">
+                    <label for="product_description">상품 설명</label>
+                    {{ form.product_description }}
+                    {{ form.product_description.errors }}
+                </div>
+                <div class="product-group">
+                    <label for="product_image">상품 사진</label>
+                    {{ form.product_image }}
+                    {{ form.product_image.errors }}
+                </div>
+                <div class="product-group">
+                    <label for="category">상품 카테고리</label>
+                    {{ form.category }}
+                    {{ form.category.errors }}
+                </div>
+                <button type="submit" class="btn btn-primary">Product Add</button>
+              </form>
+        </div>
+    </div>
+</body>
+</html>

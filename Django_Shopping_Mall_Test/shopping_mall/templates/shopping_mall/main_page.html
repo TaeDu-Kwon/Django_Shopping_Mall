@@ -1,7 +1,6 @@
-
-
 <!doctype html>
 {% load static %}
+{% load humanize %}
 <html>
   <head>
     <meta charset = utf-8>
@@ -11,25 +10,61 @@
 
   <body>
     <div class="navbar">
-      <a class="logo" href="#">
+      <a class="logo" href="{% url 'shopping_mall:main_page' %}">
         <img src="{% static 'logo.png' %}" height="70px">
       </a>
       <ul>
-        <li><a href="#">Cart</a></li>
-        <li><a href="#">Login</a></li>
+        {% if "Business_User" == user_category %}
+          <li><a href="{% url 'shopping_mall:product_addition' %}">Product Addition</a></li>
+          <li><a href="{% url 'shopping_mall:cart' %}">Cart</a></li>
+        {% else %}
+          <li><a href="{% url 'shopping_mall:cart' %}">Cart</a></li>
+        {%endif%}
+        <li><a href="#">{{ user.first_name }} {{ user.last_name }}</a></li>
+        {%if user.is_authenticated%}
+          <li><a href="{% url 'user:logout' %}">Logout</a></li>
+        {%else%}
+          <li><a href="{% url 'user:login' %}">Login</a></li>
+        {%endif%}
       </ul>
     </div>
     
     <img class="hero_header" src="{% static 'Banner_image.png' %}">
-    <h1>Product List</h1>
-    <div class="products">
-      <a href="#">
-        <img src="{% static 'Mechanical_pencil.png' %}">
-        <p>Mechanical Pencil</p>
-        <p class="price">19,900</p>
-      </a>
+
+    <div class="header-container">
+      <h1>Product List</h1>
+      <div class="dropdown">
+        <span class="dropbtn">Category</span>
+        <div class="dropdown-content">
+          {% for product in current_list %}
+          <a href="{% url 'shopping_mall:category_page' product.category %}">{{product.get_category_display}}</a>
+          {%endfor%}
+        </div>
+      </div>
     </div>
     
+
+    {% if product_info %}
+      {% for product in product_info %}
+        {% if product.sold_out %}
+          <div class="products">
+            <a href="#">
+              <img src="{{product.product_image.url}}">
+              <p class = "p">{{product.product_name}}</p> 
+              <p class = "price">품 절</p>
+            </a>
+          </div>
+        {% else %}
+          <div class="products">
+            <a href="{% url 'shopping_mall:product_details' product.id %}">
+              <img src="{{product.product_image.url}}">
+              <p class = "p">{{product.product_name}}</p> 
+              <p class = "price">{{product.product_price| intcomma}}원</p>
+            </a>
+          </div>
+        {%endif%}
+      {%endfor%}
+    {%endif%}    
     
   </body>
 </html>

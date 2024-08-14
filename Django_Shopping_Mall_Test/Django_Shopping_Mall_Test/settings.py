@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# 유저가 업로드하면 자동으로 폴더가 생성 됨
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') 
 
 # Application definition
 
@@ -38,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'shopping_mall.apps.ShoppingMallConfig'
+    'shopping_mall.apps.ShoppingMallConfig',
+    'users.apps.UsersConfig',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -113,6 +118,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'auth.User' 
+
+# 로그인 성공후 이동하는 URL
+LOGIN_REDIRECT_URL = 'shopping_mall:main_page'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/

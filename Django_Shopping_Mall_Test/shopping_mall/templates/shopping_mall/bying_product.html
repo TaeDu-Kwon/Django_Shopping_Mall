@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/product_addition.css' %}" />
+    <title>Document</title>
+</head>
+<body>
+    <h1>Bying Product</h1>
+    <div class = "product-container">
+        <div class = "product-card">
+            <h2></h2>
+            <form method="post" action="{% url 'shopping_mall:pay_product' cart_item.id %}">
+                {% csrf_token %}
+                <h2>구매자정보</h2>
+                <div class = "product-card-card">
+                    <div class = "product-card--group">
+                        <label for="name" >이름: </label>
+                        {{ user.first_name }} {{ user.last_name }}
+                    </div>
+                    <div class = "product-card--group">
+                        <label for="email" >이메일: </label>
+                        {{ user.email }}
+                    </div>
+                </div>
+                <h2>받는사람정보</h2>
+                <div class = "product-card-card">
+                    <div class = "product-card--group">
+                        <label for="user_name" >이름: </label>
+                        {{ user.first_name }} {{ user.last_name }}
+                    </div>
+                    <div class = "product-card--group">
+                        <label for="user_address" >주소: </label>
+                        {{ user_info.address }}
+                    </div>
+                </div>
+                <h2>상품정보</h2>
+                <div class = "product-card-card">
+                    <div class = "product-card--group">
+                        <label for="product_name" >이름: </label>
+                        {{cart_item.product.product_name}}
+                    </div>
+                    <div class = "product-card--group">
+                        <label for="quantity" >수량: </label>
+                        {{ cart_item.quantity }}
+                    </div>
+                    <div class = "product-card--group">
+                        <label for="product_price" >가격: </label>
+                        {{ cart_item.total_price }}
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="submit" name="action" value="purchase" class="button">구매하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
